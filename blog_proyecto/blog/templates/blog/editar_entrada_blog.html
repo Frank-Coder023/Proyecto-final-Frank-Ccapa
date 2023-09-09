@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h1>Editar Entrada de Blog</h1>
+{% if mensaje %}
+<p>{{ mensaje }}</p>
+{% endif %}
+{% if usuario_es_autor %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ formulario.as_p }}
+    <button type="submit">Guardar Cambios</button>
+</form>
+{% endif %}
+<a href="{% url 'lista_entradas' %}">Volver a la lista de entradas</a>
+{% endblock %}
+
+

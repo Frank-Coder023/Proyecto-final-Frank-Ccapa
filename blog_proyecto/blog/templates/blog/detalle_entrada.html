@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h1>{{ entrada.titulo }}</h1>
+<h2>{{ entrada.subtitulo }}</h2>
+<p>{{ entrada.fecha|date:"F d, Y" }}</p>
+<img src="{{ entrada.imagen.url }}" alt="{{ entrada.titulo }}" width="400">
+<p>{{ entrada.cuerpo|linebreaks }}</p>
+<p>Autor: {{ entrada.autor }}</p>
+<p>Categoría: {{ entrada.categoria }}</p>
+<a href="{% url 'lista_entradas' %}">Volver a la lista de entradas</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>Iniciar Sesión</h1>
+<!-- Resto del contenido de la página de inicio de sesión -->
+<div class="container">
+    <h2>Iniciar Sesión</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </form>
+    <p>No tienes una cuenta? <a href="{% url 'usuarios:signup' %}">Regístrate</a></p>
+</div>
+
+{% endblock %}

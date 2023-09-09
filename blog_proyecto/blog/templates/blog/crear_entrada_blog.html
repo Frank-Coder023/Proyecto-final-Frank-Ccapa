@@ -1,0 +1,35 @@
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h1>Crear Entrada de Blog</h1>
+
+    {% if mensaje %}
+        <p>{{ mensaje }}</p>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+
+        <button type="submit">Crear Entrada</button>
+    </form>
+
+    <h2>Entradas de Blog</h2>
+
+    <ul>
+        {% for entrada in entradas_blog %}
+            <li>
+                <strong>{{ entrada.titulo }}</strong><br>
+                {{ entrada.subtitulo }}<br>
+                Categoría: {{ entrada.categoria }}<br>
+                Autor: {{ entrada.autor.username }}<br>
+                Fecha de Creación: {{ entrada.fecha|date:"F d, Y H:i" }}<br>
+                <a href="{% url 'detalle_entrada' entrada.pk %}">Ver Detalles</a>
+            </li>
+        {% empty %}
+            <li>No hay entradas de blog disponibles.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

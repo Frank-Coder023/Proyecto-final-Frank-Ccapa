@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>Lista de Conversaciones</h1>
+<ul>
+    {% for conversacion in conversaciones %}
+    <li>
+        <a href="{% url 'ver_conversacion' conversacion.id %}">{{ conversacion }}</a>
+    </li>
+    {% empty %}
+    <p>No tienes conversaciones.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>Conversación con {{ conversacion }}</h1>
+
+<div class="conversacion">
+    {% for mensaje in mensajes %}
+    <div class="mensaje">
+        <strong>{{ mensaje.remitente.username }}</strong>
+        <p>{{ mensaje.contenido }}</p>
+        <p>Fecha: {{ mensaje.fecha_envio }}</p>
+        {% if mensaje.visto %}
+        <p>Leído</p>
+        {% else %}
+        <p>No leído</p>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No hay mensajes en esta conversación.</p>
+    {% endfor %}
+</div>
+
+<div class="enviar-mensaje">
+    <h2>Enviar mensaje</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<a href="{% url 'lista_conversaciones' %}">Volver a la lista de conversaciones</a>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h1>Lista de Entradas de Blog</h1>
+<a href="{% url 'crear_entrada' %}" class="btn btn-primary">Crear Nueva Entrada</a>
+<ul>
+    {% for entrada in entradas %}
+    <li>
+        <h2>{{ entrada.titulo }}</h2>
+        <h3>{{ entrada.subtitulo }}</h3>
+        <p>{{ entrada.fecha|date:"F d, Y" }}</p>
+        <p>Autor: {{ entrada.autor }}</p>
+        <p>Categoría: {{ entrada.categoria }}</p>
+        <a href="{% url 'detalle_entrada' entrada.pk %}">Leer más</a><!-- Enlace para la vista de detalles de la entrada -->
+        <a href="{% url 'editar_entrada' entrada.pk %}">Editar</a> <!-- Enlace para la vista de edición de la entrada -->
+        {% if user.is_authenticated and user == entrada.autor %}
+        <a href="{% url 'eliminar_entrada' entrada.pk %}">Eliminar</a>
+        {% endif %}
+    </li>
+    {% empty %}
+    <p>No hay entradas de blog aún.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

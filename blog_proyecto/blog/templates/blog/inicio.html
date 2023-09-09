@@ -1,0 +1,7 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h1>Bienvenido al Blog de Videojuegos</h1>
+<p>Descubre las últimas noticias y reseñas sobre tus videojuegos favoritos.</p>
+<a href="{% url 'lista_entradas' %}" class="btn btn-primary">Ver Entradas</a>
+{% endblock %}

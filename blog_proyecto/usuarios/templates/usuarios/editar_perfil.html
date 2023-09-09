@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<!-- Resto del contenido de la página de inicio de sesión -->
+<h2>Editar Perfil</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Cambios</button>
+</form>
+
+<a href="{% url 'usuarios:ver_perfil' username=request.user.username %}">Volver al Perfil</a>
+{% endblock %}

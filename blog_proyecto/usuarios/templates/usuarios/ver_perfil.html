@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<h1>PERFIL DE USUARIO </h1>
+<!-- Resto del contenido de la página de inicio de sesión -->
+<h2>Mi Perfil</h2>
+{% if perfil.imagen_de_perfil %}
+<img src="{{ perfil.imagen_de_perfil.url }}" alt="Imagen de perfil">
+{% else %}
+<img src="{% static 'perfiles/avatarpordefecto.png' %}" alt="Avatar por defecto">
+{% endif %}
+<p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
+<p><strong>Apellidos:</strong> {{ perfil.apellidos }}</p>
+<p><strong>Descripción:</strong> {{ perfil.descripcion }}</p>
+
+<a href="{% url 'usuarios:editar_perfil' username=user.username %}" class="btn btn-primary">Editar Perfil</a>
+<a href="{% url 'usuarios:confirmar_eliminar_cuenta' %}" class="btn btn-danger">Eliminar Cuenta</a>
+{% endblock %}

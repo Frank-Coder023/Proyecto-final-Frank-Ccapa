@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Blog de Videojuegos</title>
+    <!-- Agrega aquí tus enlaces a archivos CSS si los tienes -->
+</head>
+
+<body>
+    <header>
+        <h1>Tu Blog de Videojuegos</h1>
+        <nav>
+            <ul>
+
+                {% if user.is_authenticated %}
+                <!-- Si el usuario está autenticado, muestra el botón de cerrar sesión -->
+                <li><a href="{% url 'usuarios:logout' %}" class="btn btn-danger">Cerrar Sesión</a></li>
+                <li><a href="{% url 'usuarios:ver_perfil' user.username %}" class="btn btn-primary">Ver Perfil</a></li>
+                <li><a href="{% url 'lista_conversaciones' %}">Ir a la lista de conversaciones</a></li>
+                {% else %}
+                <li><a class="btn btn-success" href="{% url 'usuarios:login' %}">Login</a>
+                </li>
+                <li> <a class="btn btn-success" href="{% url 'usuarios:signup' %}">Register</a>
+                </li>
+                <!-- En tu plantilla HTML -->
+                {% endif %}
+                <li><a href="{% url 'lista_entradas' %}">Inicio</a></li>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+        
+    </main>
+    <footer>
+        <p>&copy; {{ year }} Tu Blog de Videojuegos</p>
+    </footer>
+</body>
+
+</html>
