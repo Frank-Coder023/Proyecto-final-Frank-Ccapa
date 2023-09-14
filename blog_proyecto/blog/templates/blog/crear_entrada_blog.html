@@ -55,18 +55,26 @@
 
 <h2>Entradas de Blog</h2>
 
-<ul>
-    {% for entrada in entradas_blog %}
-    <li>
-        <strong>{{ entrada.titulo }}</strong><br>
-        {{ entrada.subtitulo }}<br>
-        Categoría: {{ entrada.categoria }}<br>
-        Autor: {{ entrada.autor.username }}<br>
-        Fecha de Creación: {{ entrada.fecha|date:"F d, Y H:i" }}<br>
-        <a href="{% url 'detalle_entrada' entrada.pk %}">Ver Detalles</a>
-    </li>
-    {% empty %}
-    <li>No hay entradas de blog disponibles.</li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            {% for entrada in entradas_blog %}
+            <div class="card mb-4">
+                <img src="{{ entrada.imagen.url }}" alt="{{ entrada.titulo }}" class="card">
+                <div class="card-body">
+                    <h2 class="card-title">{{ entrada.titulo }}</h2>
+                    <h3 class="card-subtitle">{{ entrada.subtitulo }}</h3>
+                    <p class="card-text text-muted">{{ entrada.fecha|date:"F d, Y" }}</p>
+                    <p class="card-text">{{ entrada.cuerpo|truncatewords:30 }}</p>
+                    <p class="font-weight-bold">Autor: {{ entrada.autor }}</p>
+                    <p class="font-weight-bold">Categoría: {{ entrada.categoria }}</p>
+                    <a href="{% url 'detalle_entrada' entrada.pk %}" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No hay entradas de blog disponibles.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
