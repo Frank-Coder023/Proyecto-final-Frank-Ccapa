@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h2>Eliminar Conversación</h2>
+<p>¿Estás seguro de que deseas eliminar esta conversación?</p>
+<p>Conversación entre {{ conversacion.usuario_1 }} y {{ conversacion.usuario_2 }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+    <a href="{% url 'listar_conversaciones_autor' %}">lista de conversaciones</a>
+</form>
+{% endblock %}

@@ -23,13 +23,12 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('blog.urls')),  # Agrega 'include' con el nombre de la aplicación
+    path('', include('blog.urls')),
+    
     path('accounts/', include('usuarios.urls')),
     path('usuarios/', include('usuarios.urls')),
-
-
-    # Incluye las URLs de la aplicación de mensajería
     path('mensajeria/', include('mensajeria.urls')),
+    path('about/', include('about.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

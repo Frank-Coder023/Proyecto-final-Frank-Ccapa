@@ -1,24 +1,38 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-<h1>Lista de Entradas de Blog</h1>
-<a href="{% url 'crear_entrada' %}" class="btn btn-primary">Crear Nueva Entrada</a>
-<ul>
-    {% for entrada in entradas %}
-    <li>
-        <h2>{{ entrada.titulo }}</h2>
-        <h3>{{ entrada.subtitulo }}</h3>
-        <p>{{ entrada.fecha|date:"F d, Y" }}</p>
-        <p>Autor: {{ entrada.autor }}</p>
-        <p>Categoría: {{ entrada.categoria }}</p>
-        <a href="{% url 'detalle_entrada' entrada.pk %}">Leer más</a><!-- Enlace para la vista de detalles de la entrada -->
-        <a href="{% url 'editar_entrada' entrada.pk %}">Editar</a> <!-- Enlace para la vista de edición de la entrada -->
-        {% if user.is_authenticated and user == entrada.autor %}
-        <a href="{% url 'eliminar_entrada' entrada.pk %}">Eliminar</a>
-        {% endif %}
-    </li>
-    {% empty %}
-    <p>No hay entradas de blog aún.</p>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h1 class="display-4">Lista de Entradas de Blog</h1>
+    <a href="{% url 'crear_entrada' %}" class="btn btn-primary mb-3">Crear un blog </a>
+    <ul class="list-unstyled">
+        {% for entrada in entradas %}
+        <li class="media mb-4">
+            <img src="{{ entrada.imagen.url }}" alt="{{ entrada.titulo }}" class="mr-3" width="100">
+            <div class="media-body">
+                <h2 class="mt-0">{{ entrada.titulo }}</h2>
+                <h3>{{ entrada.subtitulo }}</h3>
+                <p class="text-muted">{{ entrada.fecha|date:"F d, Y" }}</p>
+                <p class="font-weight-bold">Autor: {{ entrada.autor }}</p>
+                <p class="font-weight-bold">Categoría: {{ entrada.categoria }}</p>
+                <a href="{% url 'detalle_entrada' entrada.pk %}" class="btn btn-primary btn-sm">Leer más</a>
+                <a href="{% url 'editar_entrada' entrada.pk %}" class="btn btn-secondary btn-sm">Editar</a>
+                {% if user.is_authenticated and user == entrada.autor %}
+                <a href="{% url 'eliminar_entrada' entrada.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                {% endif %}
+                {% if not entrada.autor == user %}
+                    {% if conversacion %}
+                    <!-- Si ya existe una conversación, muestra un enlace para ver la conversación existente -->
+                    <a href="{% url 'ver_conversacion' conversacion.id %}" class="btn btn-info btn-sm">Ver conversación</a>
+                    {% else %}
+                    <!-- Si no existe una conversación, muestra un enlace para crear una nueva conversación -->
+                    <a href="{% url 'crear_conversacion' entrada.autor.username %}" class="btn btn-success btn-sm">Enviar mensaje</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </li>
+        {% empty %}
+        <p>No hay entradas de blog aún.</p>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

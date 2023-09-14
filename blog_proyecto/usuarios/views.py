@@ -1,13 +1,11 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect
-from .forms import RegistroUsuarioForm  # Importa el formulario de registro personalizado
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import RegistroUsuarioForm
 from .models import Perfil
-from django.contrib.auth.models import User
 from .forms import EditarPerfilForm
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required 
 
-from django.contrib.auth.decorators import login_required #para vistas basadas en funciones DEF  
 def login_request(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -27,17 +25,6 @@ def login_request(request):
         form = AuthenticationForm()
     return render(request, "usuarios/login.html", {"form": form})
 
-def signup2(request):
-    if request.method == "POST":
-        form = RegistroUsuarioForm(request.POST)
-        if form.is_valid():
-            form.save()  # Graba el usuario en la base de datos
-            return redirect('inicio')  # Cambia 'inicio' por la URL de tu página de inicio
-        else:
-            return render(request, "usuarios/register.html", {"form": form, "mensaje": "Datos inválidos"})
-    else:
-        form = RegistroUsuarioForm()
-    return render(request, "usuarios/register.html", {"form": form})
 def signup(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
@@ -81,35 +68,10 @@ def confirm_delete_account(request):
     
     return render(request, 'usuarios/confirm_delete_account.html')
 
-
-
-@login_required
-def ver_perfilaquiii(request, username):
-    perfil = Perfil.objects.get(usuario__username=username)
-    return render(request, "usuarios/ver_perfil.html", {"perfil": perfil})
 @login_required
 def ver_perfil(request, username):
     perfil = get_object_or_404(Perfil, usuario__username=username)
     return render(request, "usuarios/ver_perfil.html", {"perfil": perfil})
-
-@login_required
-def editar_perfil2(request, username):
-    perfil = Perfil.objects.get(usuario__username=username)
-
-    if request.method == 'POST':
-        form = EditarPerfilForm(request.POST, request.FILES, instance=perfil)
-
-        if form.is_valid():
-            form.save()
-            return redirect('ver_perfil', username=username)
-        
-    else:
-        form = EditarPerfilForm(instance=perfil)
-
-    return render(request, 'usuarios/editar_perfil.html', {'form': form, 'perfil': perfil})
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Perfil
-from .forms import EditarPerfilForm
 
 @login_required
 def editar_perfil(request, username):
@@ -120,7 +82,7 @@ def editar_perfil(request, username):
 
         if form.is_valid():
             form.save()
-            return render(request, 'usuarios/ver_perfil.html', {'perfil': perfil})  # Renderiza la página de ver perfil con el perfil actualizado
+            return render(request, 'usuarios/ver_perfil.html', {'perfil': perfil})  
         
     else:
         form = EditarPerfilForm(instance=perfil)

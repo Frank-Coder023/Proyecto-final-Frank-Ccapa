@@ -1,7 +1,8 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<h1>Conversación con {{ conversacion }}</h1>
+<h2>Conversación con {{ conversacion.usuario_1.username }} y {{ conversacion.usuario_2.username }}</h2>
+<h1>Conversación con {{ conversacion.usuario_1 }} y {{ conversacion.usuario_2 }}</h1>
 
 <div class="conversacion">
     {% for mensaje in mensajes %}
@@ -19,15 +20,11 @@
     <p>No hay mensajes en esta conversación.</p>
     {% endfor %}
 </div>
+<form method="post" class="message-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+</form>
 
-<div class="enviar-mensaje">
-    <h2>Enviar mensaje</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar</button>
-    </form>
-</div>
-
-<a href="{% url 'lista_conversaciones' %}">Volver a la lista de conversaciones</a>
-{% endblock %}
+<a href="{% url 'listar_conversaciones_autor' %}">Volver a la lista de conversaciones</a>
+{% endblock %}s

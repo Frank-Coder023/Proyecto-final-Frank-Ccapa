@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>CREAR UNA CONVERSACION</h1>
+
+<h1>Crear Conversación con {{ destinatario.username }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Crear Conversación</button>
+</form>
+<a href="{% url 'lista_conversaciones' %}">Volver a la lista de conversaciones</a>
+{% endblock %}

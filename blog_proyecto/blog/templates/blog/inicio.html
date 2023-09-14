@@ -1,7 +1,55 @@
-{% extends "blog/base.html" %}
+{% extends 'blog/base.html' %}
 
 {% block content %}
-<h1>Bienvenido al Blog de Videojuegos</h1>
-<p>Descubre las últimas noticias y reseñas sobre tus videojuegos favoritos.</p>
-<a href="{% url 'lista_entradas' %}" class="btn btn-primary">Ver Entradas</a>
+<style>
+    /* Establece el fondo de imagen solo para esta página */
+    body {
+        background-image: url('/media/fondo/fondo.jpg');
+        /* Ruta a tu imagen de fondo */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+    }
+
+    /* Agrega estilos adicionales específicos para la página de inicio */
+
+
+    /* Estilos para el contenido en la página de inicio */
+    .display-4 {
+        color: #fff;
+        /* Color de texto en la página de inicio */
+    }
+
+    .lead {
+        color: #fff;
+        /* Color de texto en la página de inicio */
+    }
+
+    .btn-lg {
+        background-color: #007bff;
+        /* Color del botón */
+        border: none;
+        color: #fff;
+        /* Color del texto del botón */
+        padding: 15px 30px;
+        /* Espaciado del botón */
+        border-radius: 10px;
+        /* Bordes redondeados */
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h1 class="display-4">¡Bienvenido al Blog de Videojuegos!</h1>
+            <br>
+            <p class="lead">Descubre las últimas noticias y reseñas sobre tus videojuegos favoritos.</p>
+            <br>
+            <a href="{% url 'lista_entradas' %}" 
+            class="btn btn-primary btn-lg">Ver Blog</a>
+            <br>
+        </div>
+    </div>
+</div>
 {% endblock %}

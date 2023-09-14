@@ -1,13 +1,51 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<!-- Resto del contenido de la página de inicio de sesión -->
-<h2>Editar Perfil</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
-</form>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="text-center mb-4">Editar Perfil</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.nombre.id_for_label }}">Nombre </label><br>
+                    
+                    <div class="input-group">
+                        <textarea class="form-control" id="{{ form.nombre.id_for_label }}"
+                            name="{{ form.nombre.name }}" rows="1">{{ form.nombre.value }}</textarea>
+                    </div>
 
-<a href="{% url 'usuarios:ver_perfil' username=request.user.username %}">Volver al Perfil</a>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.apellidos.id_for_label }}">Apellidos</label><br>
+                    <div class="input-group">
+                        <textarea class="form-control" id="{{ form.apellidos.id_for_label }}"
+                            name="{{ form.apellidos.name }}" rows="1">{{ form.apellidos.value }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.descripcion.id_for_label }}">Descripción</label><br>
+                    <div class="input-group">
+                        <textarea class="form-control" id="{{ form.descripcion.id_for_label }}"
+                            name="{{ form.descripcion.name }}" rows="4">{{ form.descripcion.value }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.imagen_de_perfil.id_for_label }}">Imagen de Perfil</label><br>
+                    {{ form.imagen_de_perfil }}
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+                
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a href="{% url 'usuarios:ver_perfil' username=request.user.username %}" class="btn btn-secondary">Volver al
+        Perfil</a>
+</div>
+<br>
 {% endblock %}

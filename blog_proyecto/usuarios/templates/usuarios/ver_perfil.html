@@ -1,18 +1,40 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-{% block content %}
-<h1>PERFIL DE USUARIO </h1>
-<!-- Resto del contenido de la página de inicio de sesión -->
-<h2>Mi Perfil</h2>
-{% if perfil.imagen_de_perfil %}
-<img src="{{ perfil.imagen_de_perfil.url }}" alt="Imagen de perfil">
-{% else %}
-<img src="{% static 'perfiles/avatarpordefecto.png' %}" alt="Avatar por defecto">
-{% endif %}
-<p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
-<p><strong>Apellidos:</strong> {{ perfil.apellidos }}</p>
-<p><strong>Descripción:</strong> {{ perfil.descripcion }}</p>
 
-<a href="{% url 'usuarios:editar_perfil' username=user.username %}" class="btn btn-primary">Editar Perfil</a>
-<a href="{% url 'usuarios:confirmar_eliminar_cuenta' %}" class="btn btn-danger">Eliminar Cuenta</a>
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                {% if perfil.imagen_de_perfil %}
+                <img src="{{ perfil.imagen_de_perfil.url }}" class="card-img-top" alt="Imagen de perfil" style="max-width: 100%; height: auto;">
+                {% else %}
+                <img src="{% static 'perfiles/avatarpordefecto.png' %}" class="card-img-top" alt="Avatar por defecto">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ perfil.nombre }} {{ perfil.apellidos }}</h5>
+                    <a href="{% url 'usuarios:editar_perfil' username=user.username %}"
+                        class="btn btn-primary btn-block">Editar Perfil</a>
+                    <a href="{% url 'usuarios:confirmar_eliminar_cuenta' %}" class="btn btn-danger btn-block">Eliminar
+                        Cuenta</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <h1 class="mb-4">Mi Perfil</h1>
+            <p class="perfil-text"><strong>Nombre:</strong> {{ perfil.nombre }}</p>
+            <p class="perfil-text"><strong>Apellidos:</strong> {{ perfil.apellidos }}</p>
+            <p class="perfil-text"><strong>Descripción:</strong> {{ perfil.descripcion }}</p>
+
+            <!-- Agrega aquí más información de perfil si es necesario -->
+        </div>
+    </div>
+    <br>
+</div>
+
+<style>
+    .perfil-text {
+        font-size: 18px; /* Ajusta el tamaño del texto según tus preferencias */
+    }
+</style>
 {% endblock %}
